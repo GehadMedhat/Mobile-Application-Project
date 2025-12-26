@@ -11,6 +11,29 @@ class WelcomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Check if user is already logged in and completed onboarding
+        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val isLoggedIn = prefs.getBoolean("isLoggedIn", false)
+        val hasCompletedOnboarding = prefs.getBoolean("onboardingCompleted", false)
+
+        if (isLoggedIn) {
+            if (hasCompletedOnboarding) {
+                // User already logged in and completed onboarding -> Go to Home
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+                return
+            } else {
+                // User logged in but didn't complete onboarding -> Go to Onboarding
+                val intent = Intent(this, OnboardingActivity::class.java)
+                startActivity(intent)
+                finish()
+                return
+            }
+        }
+
+        // First time user - show welcome screen
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -32,13 +55,9 @@ class WelcomeActivity : AppCompatActivity() {
 
         // Continue as guest (optional - you can implement later)
         binding.rtcilofvmf29.setOnClickListener {
-            // TODO: Navigate to main app as guest
-            // For now, just show a toast
-            android.widget.Toast.makeText(
-                this,
-                "Guest mode - To be implemented",
-                android.widget.Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 }

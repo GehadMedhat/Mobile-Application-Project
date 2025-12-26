@@ -1,102 +1,109 @@
 package com.example.fulify
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.example.fulify.adapter.OnboardingPagerAdapter
-import com.example.fulify.fragments.BaseOnboardingFragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.fulify.fragments.*
 import com.example.fulify.viewmodel.OnboardingViewModel
 
-/**
- * Main Activity that hosts the onboarding flow using ViewPager2
- */
 class OnboardingActivity : AppCompatActivity() {
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var pagerAdapter: OnboardingPagerAdapter
-    private val viewModel: OnboardingViewModel by viewModels()
+    private lateinit var viewModel: OnboardingViewModel
+    private val fragments = mutableListOf<BaseOnboardingFragment>()
+    private var currentStep = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
-        setupViewPager()
-        observeViewModel()
+        viewModel = ViewModelProvider(this)[OnboardingViewModel::class.java]
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (viewPager.currentItem > 0) {
-                    viewPager.currentItem = viewPager.currentItem - 1
-                } else {
-                    finish()
-                }
-            }
-        })
-    }
+        // Add all your step fragments
+        initializeFragments()
 
-    private fun setupViewPager() {
-        viewPager = findViewById(R.id.viewPager)
-        pagerAdapter = OnboardingPagerAdapter(this)
-
-        viewPager.adapter = pagerAdapter
-        viewPager.isUserInputEnabled = false // Disable swipe navigation
-
-        // Register callback for page changes
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                viewModel.setCurrentStep(position)
-            }
-        })
-
-        // Setup navigation callbacks for fragments
-        setupFragmentCallbacks()
-    }
-
-    private fun setupFragmentCallbacks() {
-        // We need to set callbacks after fragments are created
-        // This is handled by attaching callbacks when fragments become visible
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-
-                // Get current fragment and set navigation callbacks
-                val fragment = supportFragmentManager.findFragmentByTag("f$position")
-                if (fragment is BaseOnboardingFragment) {
-                    fragment.onNavigateNext = { navigateToNext() }
-                    fragment.onNavigateBack = { navigateToPrevious() }
-                }
-            }
-        })
-    }
-
-    private fun observeViewModel() {
-        viewModel.currentStep.observe(this) { step ->
-            // Update UI based on current step if needed
-            // For example, you could update a custom progress bar
-        }
-
-        viewModel.userProfile.observe(this) { profile ->
-            // React to profile changes if needed
+        // Show first fragment
+        if (savedInstanceState == null) {
+            showFragment(0)
         }
     }
 
-    private fun navigateToNext() {
-        val currentItem = viewPager.currentItem
-        if (currentItem < pagerAdapter.itemCount - 1) {
-            viewPager.setCurrentItem(currentItem + 1, true)
-        }
+    private fun initializeFragments() {
+        // Add Step1NameFragment
+        fragments.add(Step1NameFragment.newInstance())
+
+        // TODO: Add other steps when you create them:
+         fragments.add(Step2GenderFragment.newInstance())
+         fragments.add(Step3AgeFragment.newInstance())
+         fragments.add(Step4HeightFragment.newInstance())
+         fragments.add(Step5WeightFragment.newInstance())
+         fragments.add(Step6MealsFragment.newInstance())
     }
 
-    private fun navigateToPrevious() {
-        val currentItem = viewPager.currentItem
-        if (currentItem > 0) {
-            viewPager.setCurrentItem(currentItem - 1, true)
+    private fun showFragment(position: Int) {
+        if (position < 0 || position >= fragments.size) return
+
+        currentStep = position
+        val fragment = fragments[position]
+
+        // Set navigation callbacks
+        fragment.onNavigateNext = { navigateToNext() }
+        fragment.onNavigateBack = { navigateToPrevious() }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
+    }
+
+    fun navigateToNext() {
+        if (currentStep < fragments.size - 1) {
+            showFragment(currentStep + 1)
         } else {
-            // First page - handle back button (exit or show dialog)
-            onBackPressedDispatcher.onBackPressed()
+            // Last step completed - save and navigate to home
+            completeOnboarding()
         }
+    }
+
+    fun navigateToPrevious() {
+        if (currentStep > 0) {
+            showFragment(currentStep - 1)
+        } else {
+            // If on first step, go back to welcome
+            finish()
+        }
+    }
+
+    private fun completeOnboarding() {
+        // Save that onboarding is complete
+        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        prefs.edit().putBoolean("onboardingCompleted", true).apply()
+
+        // Save user profile data
+        saveUserProfile()
+
+        // Navigate to MainActivity (HomeDietFragment)
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun saveUserProfile() {
+        val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+        val editor = prefs.edit()
+
+        viewModel.userProfile.value?.let { profile ->
+            profile.name?.let { editor.putString("userName", it) }
+            profile.age?.let { editor.putInt("userAge", it) }
+            profile.gender?.let { editor.putString("userGender", it.name) }  // Save enum as string
+            profile.weight?.let { editor.putFloat("userWeight", it.toFloat()) }
+            profile.height?.let { editor.putFloat("userHeight", it.toFloat()) }
+            profile.fitnessGoal?.let { editor.putString("userGoal", it) }
+        }
+
+        editor.apply()
+    }
+
+    override fun onBackPressed() {
+        navigateToPrevious()
     }
 }

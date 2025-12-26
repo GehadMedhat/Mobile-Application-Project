@@ -62,7 +62,7 @@ class SetNewPasswordActivity : AppCompatActivity() {
             binding.rti8b274681a.setImageResource(R.drawable.eye_off)
         } else {
             binding.rehhqp4u7ksb.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.rti8b274681a.setImageResource(R.drawable.eye)
+            binding.rti8b274681a.setImageResource(R.drawable.eye1)
         }
         binding.rehhqp4u7ksb.setSelection(binding.rehhqp4u7ksb.text?.length ?: 0)
     }
@@ -74,7 +74,7 @@ class SetNewPasswordActivity : AppCompatActivity() {
             binding.rew5jukqcgn4.setImageResource(R.drawable.eye_off)
         } else {
             binding.rqtdpu3cg5vd.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.rew5jukqcgn4.setImageResource(R.drawable.eye)
+            binding.rew5jukqcgn4.setImageResource(R.drawable.eye1)
         }
         binding.rqtdpu3cg5vd.setSelection(binding.rqtdpu3cg5vd.text?.length ?: 0)
     }

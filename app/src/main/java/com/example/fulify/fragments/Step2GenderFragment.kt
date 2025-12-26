@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.fulify.R
-import com.example.fulify.model.UserProfile
+import com.example.fulify.viewmodel.UserProfile  // Changed from model to viewmodel
 
 /**
  * Step 2: Gender Selection Fragment
@@ -75,48 +75,36 @@ class Step2GenderFragment : BaseOnboardingFragment() {
 
         when (selectedGender) {
             UserProfile.Gender.MALE -> {
-                // Male: White background with green stroke (selected)
                 flMale.setBackgroundResource(R.drawable.bg_gender_male_selected)
-                // Female: Black background with gray stroke (unselected)
                 flFemale.setBackgroundResource(R.drawable.bg_gender_female_unselected)
-                // Male icon is black on white
                 maleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.black),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
-                // Female icon is white on black
                 femaleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.white),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
             }
             UserProfile.Gender.FEMALE -> {
-                // Male: White background with gray stroke (unselected)
                 flMale.setBackgroundResource(R.drawable.bg_gender_male_unselected)
-                // Female: Black background with green stroke (selected)
                 flFemale.setBackgroundResource(R.drawable.bg_gender_female_selected)
-                // Male icon is black on white
                 maleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.black),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
-                // Female icon is white on black
                 femaleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.white),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
             }
             UserProfile.Gender.NONE -> {
-                // Male: White background with gray stroke
                 flMale.setBackgroundResource(R.drawable.bg_gender_male_unselected)
-                // Female: Black background with gray stroke
                 flFemale.setBackgroundResource(R.drawable.bg_gender_female_unselected)
-                // Male icon is black on white
                 maleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.black),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 )
-                // Female icon is white on black
                 femaleIcon?.setColorFilter(
                     ContextCompat.getColor(requireContext(), android.R.color.white),
                     android.graphics.PorterDuff.Mode.SRC_IN

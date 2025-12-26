@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             binding.rlhctwdh473.setImageResource(R.drawable.eye_off)
         } else {
             binding.password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.rlhctwdh473.setImageResource(R.drawable.eye)
+            binding.rlhctwdh473.setImageResource(R.drawable.eye1)
         }
         binding.password.setSelection(binding.password.text?.length ?: 0)
     }
@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // Check credentials (in real app, verify with backend)
+        // Check credentials
         val prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE)
         val savedEmail = prefs.getString("email", "")
         val savedPassword = prefs.getString("password", "")
@@ -96,9 +96,18 @@ class LoginActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
 
-            // Navigate to main app (create MainActivity later)
-            // For now, just finish
+            // Check if user has completed onboarding
+            val hasCompletedOnboarding = prefs.getBoolean("onboardingCompleted", false)
 
+            if (hasCompletedOnboarding) {
+                // User already completed onboarding -> Go to Home
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            } else {
+                // First time login -> Go to Onboarding
+                val intent = Intent(this, OnboardingActivity::class.java)
+                startActivity(intent)
+            }
 
             finish()
         } else {

@@ -13,18 +13,45 @@
         android:theme="@style/Theme.Fulify"
         tools:targetApi="31">
 
+        <!-- WelcomeActivity as LAUNCHER (First screen) -->
         <activity
-            android:name=".MainActivity"
+            android:name=".WelcomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+
+        <!-- Other Activities -->
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".VerificationActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".SetNewPasswordActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".OnboardingActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
     </application>
 

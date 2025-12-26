@@ -25,7 +25,7 @@
                 android:layout_marginTop="34dp"
                 android:layout_marginBottom="14dp"
                 android:layout_marginStart="30dp"
-                android:src="@drawable/back_arrow"
+                android:src="@drawable/back_arrow2"
                 android:scaleType="fitXY"/>
 
             <TextView
@@ -123,7 +123,7 @@
                     android:layout_width="21dp"
                     android:layout_height="16dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/eye"/>
+                    android:src="@drawable/eye1"/>
             </LinearLayout>
 
             <LinearLayout

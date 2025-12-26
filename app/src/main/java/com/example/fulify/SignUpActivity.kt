@@ -57,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.rlhctwdh473.setImageResource(R.drawable.eye_off)
         } else {
             binding.password.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.rlhctwdh473.setImageResource(R.drawable.eye)
+            binding.rlhctwdh473.setImageResource(R.drawable.eye1)
         }
         binding.password.setSelection(binding.password.text?.length ?: 0)
     }
@@ -69,7 +69,7 @@ class SignUpActivity : AppCompatActivity() {
             binding.reyeConfirm.setImageResource(R.drawable.eye_off)
         } else {
             binding.confPassword.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-            binding.reyeConfirm.setImageResource(R.drawable.eye)
+            binding.reyeConfirm.setImageResource(R.drawable.eye1)
         }
         binding.confPassword.setSelection(binding.confPassword.text?.length ?: 0)
     }

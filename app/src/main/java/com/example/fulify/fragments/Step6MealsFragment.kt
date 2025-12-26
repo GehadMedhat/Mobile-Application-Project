@@ -1,11 +1,13 @@
 package com.example.fulify.fragments
 
+import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fulify.MainActivity
 import com.example.fulify.R
 import com.example.fulify.adapter.WheelPickerAdapter
 import com.example.fulify.utils.CenterSnapHelper
@@ -91,20 +93,45 @@ class Step6MealsFragment : BaseOnboardingFragment() {
     private fun completeOnboarding() {
         val userProfile = viewModel.getUserProfile()
 
+        // Save data to SharedPreferences
+        saveUserProfile()
+
         // Show completion message
         Toast.makeText(
             requireContext(),
             "Onboarding Complete!\nWelcome, ${userProfile?.name}!",
-            Toast.LENGTH_LONG
+            Toast.LENGTH_SHORT
         ).show()
 
-        // In a real app, you would:
-        // 1. Save data to SharedPreferences or database
-        // 2. Navigate to main app screen
-        // 3. Send data to server
-
-        // For now, just finish the activity
+        // Navigate to MainActivity with HomeDietFragment
+        val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            // Add flag to clear the onboarding activity from back stack
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            // Optional: pass a flag to indicate we should show HomeDietFragment
+            putExtra("SHOW_HOME_DIET", true)
+        }
+        startActivity(intent)
         requireActivity().finish()
+    }
+
+    private fun saveUserProfile() {
+        val prefs = requireContext().getSharedPreferences("UserPrefs", android.content.Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+
+        // Mark onboarding as completed
+        editor.putBoolean("onboardingCompleted", true)
+
+        viewModel.userProfile.value?.let { profile ->
+            profile.name?.let { editor.putString("userName", it) }
+            profile.age?.let { editor.putInt("userAge", it) }
+            profile.gender?.let { editor.putString("userGender", it.name) }
+            profile.weight?.let { editor.putInt("userWeight", it) }
+            profile.height?.let { editor.putInt("userHeight", it) }
+            profile.mealsPerDay?.let { editor.putInt("userMeals", it) }
+            profile.fitnessGoal?.let { editor.putString("userGoal", it) }
+        }
+
+        editor.apply()
     }
 
     override fun validateStep(): Boolean {
