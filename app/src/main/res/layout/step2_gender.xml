@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="16dp">
+
+    <!-- Back Arrow -->
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <!-- Step Badge -->
+    <TextView
+        android:id="@+id/tvStepBadge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_step_badge"
+        android:paddingStart="12dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="STEP 2"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="SELECT YOUR GENDER"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStepBadge" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/urbanist_regular"
+        android:text="Help us understand you better"
+        android:textAlignment="center"
+        android:textColor="#999999"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <!-- Gender Selection Container -->
+    <LinearLayout
+        android:id="@+id/genderContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
+
+        <!-- Male Option -->
+        <FrameLayout
+            android:id="@+id/flMale"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gender_male_unselected"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivMaleIcon"
+                android:layout_width="137dp"
+                android:layout_height="126dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_male"
+                android:contentDescription="Male"
+                app:tint="#000000" />
+        </FrameLayout>
+
+        <!-- Female Option -->
+        <FrameLayout
+            android:id="@+id/flFemale"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_gender_female_selected"
+            android:clickable="true"
+            android:focusable="true">
+
+            <ImageView
+                android:id="@+id/ivFemaleIcon"
+                android:layout_width="112dp"
+                android:layout_height="126dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_female"
+                android:contentDescription="Female"
+                app:tint="#FFFFFF" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- Back Button -->
+    <Button
+    android:id="@+id/btnBack"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_button_white"
+        app:backgroundTint="@null"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="Back"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/progressIndicator"
+        app:layout_constraintEnd_toStartOf="@id/btnContinue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintWidth_percent="0.45" />
+
+    <!-- Continue Button -->
+    <Button
+        android:id="@+id/btnContinue"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_button_green"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="CONTINUE"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/progressIndicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnBack"
+        app:layout_constraintWidth_percent="0.45" />
+
+    <!-- Progress Indicator -->
+    <LinearLayout
+        android:id="@+id/progressIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <View
+            android:layout_width="32dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#000000" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:layout_marginEnd="4dp"
+            android:background="#DDDDDD" />
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="4dp"
+            android:background="#DDDDDD" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
